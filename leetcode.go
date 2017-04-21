@@ -3,8 +3,7 @@ package main
 import "strings"
 
 /*
-461
-Hamming Distance
+461. Hamming Distance
 */
 
 func hammingDistance(x int, y int) int {
@@ -20,8 +19,7 @@ func hammingDistance(x int, y int) int {
 }
 
 /*
-557
-Reverse Words in a String III
+557. Reverse Words in a String III
 */
 
 func reverseWords(s string) string {
@@ -39,4 +37,83 @@ func reverseWord(s string) string {
 		b[i], b[len(b)-1-i] = b[len(b)-1-i], b[i]
 	}
 	return string(b)
+}
+
+/*
+26. Remove Duplicates from Sorted Array
+*/
+
+func removeDuplicates(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+	i := 0
+	for j := 0; j < len(nums); j++ {
+		if nums[i] != nums[j] {
+			i++
+			nums[i] = nums[j]
+		}
+	}
+	return i + 1
+}
+
+/*
+167. Two Sum II - Input array is sorted
+*/
+
+/*
+two pointer
+if i is less than j, stop
+if val[i] == val[j] stop
+1 2 4 4 7 target: 6
+1 + 7 = 8 - too large, decrement j
+1 + 4 = 5 - too small, increment i
+2 + 4 = 6 - hooray!
+*/
+
+func twoSum(numbers []int, target int) []int {
+	n := len(numbers)
+	i, j := 0, n-1
+	for {
+		sum := numbers[i] + numbers[j]
+		if sum == target {
+			return []int{i + 1, j + 1}
+		} else if sum > target {
+			j--
+		} else {
+			i++
+		}
+	}
+}
+
+/*
+189. Rotate Array
+*/
+
+/*
+1 2 3
+rotate 1
+3 1 2
+rotate 2
+2 3 1
+rotate 3
+1 2 3
+k = k % n
+
+*/
+
+func rotate(nums []int, k int) {
+	n := len(nums)
+	k, count := k%n, 0
+	for start := 0; count < n; start++ {
+		current, temp := start, nums[start]
+		for {
+			current = (current + k) % n
+			nums[current], temp = temp, nums[current]
+			count++
+			if start == current {
+				break
+			}
+		}
+	}
 }

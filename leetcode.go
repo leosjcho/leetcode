@@ -156,3 +156,43 @@ func max(x, y int) int {
 	}
 	return x
 }
+
+/*
+238. Product of Array Except Self
+*/
+
+// 1 2 3 4
+// 2 * 3 * 4, 1 * 3 * 4, 1 * 2 * 4, 1 * 2 * 3
+
+func productExceptSelf(nums []int) []int {
+	res := []int{1}
+	for i := 1; i < len(nums); i++ {
+		res = append(res, res[i-1]*nums[i-1])
+	}
+	right := 1
+	for j := len(nums) - 1; j >= 0; j-- {
+		res[j] *= right
+		right *= nums[j]
+	}
+	return res
+}
+
+/*
+242. Valid Anagram
+*/
+
+func isAnagram(s string, t string) bool {
+	chars := map[rune]int{}
+	for _, c := range s {
+		chars[c]++
+	}
+	for _, c := range t {
+		chars[c]--
+	}
+	for _, count := range chars {
+		if count != 0 {
+			return false
+		}
+	}
+	return true
+}

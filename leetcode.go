@@ -61,16 +61,6 @@ func removeDuplicates(nums []int) int {
 167. Two Sum II - Input array is sorted
 */
 
-/*
-two pointer
-if i is less than j, stop
-if val[i] == val[j] stop
-1 2 4 4 7 target: 6
-1 + 7 = 8 - too large, decrement j
-1 + 4 = 5 - too small, increment i
-2 + 4 = 6 - hooray!
-*/
-
 func twoSum(numbers []int, target int) []int {
 	n := len(numbers)
 	i, j := 0, n-1
@@ -90,18 +80,6 @@ func twoSum(numbers []int, target int) []int {
 189. Rotate Array
 */
 
-/*
-1 2 3
-rotate 1
-3 1 2
-rotate 2
-2 3 1
-rotate 3
-1 2 3
-k = k % n
-
-*/
-
 func rotate(nums []int, k int) {
 	n := len(nums)
 	k, count := k%n, 0
@@ -115,5 +93,30 @@ func rotate(nums []int, k int) {
 				break
 			}
 		}
+	}
+}
+
+/*
+125. Valid Palindrome
+*/
+
+func isPalindrome(s string) bool {
+	ss := []rune{}
+	s = strings.ToLower(s)
+	for _, c := range s {
+		if ((c >= 'a') && (c <= 'z')) || ((c >= '0') && (c <= '9')) {
+			ss = append(ss, c)
+		}
+	}
+	i, j := 0, len(ss)-1
+	for {
+		if j <= i {
+			return true
+		}
+		if ss[i] != ss[j] {
+			return false
+		}
+		j--
+		i++
 	}
 }

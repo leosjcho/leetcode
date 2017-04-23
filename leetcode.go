@@ -417,3 +417,18 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	l2.Next = mergeTwoLists(l1, l2.Next)
 	return l2
 }
+
+/*
+24. Swap Nodes in Pairs
+*/
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func swapPairs(head *ListNode) *ListNode {
+
+}

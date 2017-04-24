@@ -583,3 +583,84 @@ func isValidBSTHelper(root *TreeNode, min, max int) bool {
 	return isValidBSTHelper(root.Left, min, root.Val) &&
 		isValidBSTHelper(root.Right, root.Val, max)
 }
+
+/*
+225. Implement Stack using Queues
+*/
+type MyStack struct {
+	q *Queue
+}
+
+/** Initialize your data structure here. */
+func Constructor() MyStack {
+	return MyStack{q: NewQueue()}
+}
+
+/** Push element x onto stack. */
+func (this *MyStack) Push(x int) {
+	this.q.Push(x)
+	for i := 0; i < this.q.Size()-1; i++ {
+		this.q.Push(this.q.Peek())
+		this.q.Pop()
+	}
+}
+
+/** Removes the element on top of the stack and returns that element. */
+func (this *MyStack) Pop() int {
+	return this.q.Pop()
+}
+
+/** Get the top element. */
+func (this *MyStack) Top() int {
+	return this.q.Peek()
+}
+
+/** Returns whether the stack is empty. */
+func (this *MyStack) Empty() bool {
+	return this.q.IsEmpty()
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(x);
+ * param_2 := obj.Pop();
+ * param_3 := obj.Top();
+ * param_4 := obj.Empty();
+ */
+
+type Queue struct {
+	items []int
+}
+
+func NewQueue() *Queue {
+	return &Queue{items: []int{}}
+}
+
+func (q *Queue) Push(x int) {
+	q.items = append(q.items, x)
+}
+
+func (q *Queue) Peek() int {
+	if q.Size() == 0 {
+		return -1
+	}
+	return q.items[0]
+}
+
+func (q *Queue) Pop() int {
+	if q.Size() == 0 {
+		return -1
+	}
+	x := q.items[0]
+	q.items = q.items[1:]
+	return x
+}
+
+func (q *Queue) Size() int {
+	return len(q.items)
+}
+
+func (q *Queue) IsEmpty() bool {
+	return len(q.items) == 0
+}

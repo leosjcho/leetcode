@@ -286,6 +286,26 @@ func productExceptSelf(nums []int) []int {
 	return res
 }
 
+// explcit
+func productExceptSelf(nums []int) []int {
+	n := len(nums)
+	results := make([]int, n)
+	for i := range results {
+		results[i] = 1
+	}
+	runningTotal := 1
+	for i := 1; i < n; i++ {
+		runningTotal *= nums[i-1]
+		results[i] *= runningTotal
+	}
+	runningTotal = 1
+	for i := n - 2; i >= 0; i-- {
+		runningTotal *= nums[i+1]
+		results[i] *= runningTotal
+	}
+	return results
+}
+
 /*
 242. Valid Anagram
 */

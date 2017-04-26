@@ -1013,3 +1013,80 @@ func reverseString(s string) string {
 	}
 	return string(r)
 }
+
+/*
+2. Add Two Numbers
+*/
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+
+// while l1 && l2 exist
+// sum = l1 and l2 and carryover
+// carryover = sum // 10 (integer division)
+// sum %= 10
+// add new node to sumlist with sum
+// while l1 exists
+// sum = l1 + carryover
+// perform same operation as above
+// while l2 exists
+// perform same operations as above
+// if carryover > 0
+// add new node to sumlist with carryover
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	carryover := 0
+	sumHead := &ListNode{}
+	sumTail := sumHead
+	for l1 != nil && l2 != nil {
+		carryover, sumTail = insertSum(l1.Val, l2.Val, carryover, sumTail)
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+	for l1 != nil {
+		carryover, sumTail = insertSum(l1.Val, 0, carryover, sumTail)
+		l1 = l1.Next
+	}
+	for l2 != nil {
+		carryover, sumTail = insertSum(0, l2.Val, carryover, sumTail)
+		l2 = l2.Next
+	}
+	if carryover > 0 {
+		insertSum(0, 0, carryover, sumTail)
+	}
+	return sumHead.Next
+}
+
+func insertSum(v1, v2, carry int, sumTail *ListNode) (int, *ListNode) {
+	sum := v1 + v2 + carry
+	c := sum / 10
+	sum %= 10
+	node := &ListNode{sum, nil}
+	sumTail.Next = node
+	return c, node
+}
+
+/*
+l1 = [2]
+l2 = [9, 5]
+carryover = 0
+sumhead = empty node
+sumtail = sumhead
+l1 and l2 not nil
+sum = 2 + 9 + 0 = 11
+c = 11 / 10 = 1
+sum = 1
+sumtail.next = {1, nil}
+carryover = 1, sumTail = {1, nil}
+l1 = nil, l2 = 5
+sum = 0 + 5 + 1 = 6
+c = 6 / 10 = 0
+node = {6, nil}
+output:
+1 -> 6
+*/

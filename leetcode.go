@@ -1043,32 +1043,23 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	carryover := 0
 	sumHead := &ListNode{}
 	sumTail := sumHead
-	for l1 != nil && l2 != nil {
-		carryover, sumTail = insertSum(l1.Val, l2.Val, carryover, sumTail)
-		l1 = l1.Next
-		l2 = l2.Next
-	}
-	for l1 != nil {
-		carryover, sumTail = insertSum(l1.Val, 0, carryover, sumTail)
-		l1 = l1.Next
-	}
-	for l2 != nil {
-		carryover, sumTail = insertSum(0, l2.Val, carryover, sumTail)
-		l2 = l2.Next
-	}
-	if carryover > 0 {
-		insertSum(0, 0, carryover, sumTail)
+	for l1 != nil || l2 != nil || carryover > 0 {
+		l1v, l2v := 0, 0
+		if l1 != nil {
+			l1v = l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			l2v = l2.Val
+			l2 = l2.Next
+		}
+		sum := l1v + l2v + carryover
+		n := &ListNode{sum % 10, nil}
+		carryover = sum / 10
+		sumTail.Next = n
+		sumTail = n
 	}
 	return sumHead.Next
-}
-
-func insertSum(v1, v2, carry int, sumTail *ListNode) (int, *ListNode) {
-	sum := v1 + v2 + carry
-	c := sum / 10
-	sum %= 10
-	node := &ListNode{sum, nil}
-	sumTail.Next = node
-	return c, node
 }
 
 /*

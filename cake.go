@@ -64,20 +64,16 @@ return 0
 // [ 0 ] ?
 
 func getProductsOfAllIntsExceptAtIndex(nums []int) []int {
-	n := len(nums)
 	results := make([]int, n)
-	for i := range results {
-		results[i] = 1
-	}
 	runningTotal := 1
-	for i := 1; i < n; i++ {
-		runningTotal *= nums[i-1]
-		results[i] *= runningTotal
+	for i := range nums {
+		results[i] = runningTotal
+		runningTotal *= nums[i]
 	}
 	runningTotal = 1
-	for i := n - 2; i >= 0; i-- {
-		runningTotal *= nums[i+1]
+	for i := len(nums) - 1; i >= 0; i-- {
 		results[i] *= runningTotal
+		runningTotal *= nums[i]
 	}
 	return results
 }

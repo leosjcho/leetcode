@@ -1097,3 +1097,14 @@ node = {6, nil}
 output:
 1 -> 6
 */
+
+/*
+371. Sum of Two Integers
+*/
+
+func getSum(a int, b int) int {
+	if b == 0 {
+		return a
+	}
+	return getSum(a^b, (a&b)<<1)
+}

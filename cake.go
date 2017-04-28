@@ -77,3 +77,7 @@ func getProductsOfAllIntsExceptAtIndex(nums []int) []int {
 	}
 	return results
 }
+
+/*
+12. Rotation Point
+*/

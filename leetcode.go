@@ -1110,34 +1110,6 @@ func getSum(a int, b int) int {
 }
 
 /*
-13. Roman to Integer
-*/
-
-/*
-I
-II
-III
-IV
-V
-VI
-VII
-VIII
-IX
-X
-XI
-XII
-XIII
-XIV
-XV
-XVI
-XVII
-*/
-
-func romanToInt(s string) int {
-	// TODO
-}
-
-/*
 146. LRU Cache
 */
 
@@ -1223,4 +1195,63 @@ func majorityElement(nums []int) int {
 		}
 	}
 	return maxElement
+}
+
+/*
+13. Roman to Integer
+*/
+
+func romanToInt(s string) int {
+	values := map[byte]int{
+		'I': 1,
+		'V': 5,
+		'X': 10,
+		'L': 50,
+		'C': 100,
+		'D': 500,
+		'M': 1000,
+	}
+	result := values[s[len(s)-1]]
+	for i := len(s) - 2; i >= 0; i-- {
+		v := values[s[i]]
+		if v < values[s[i+1]] {
+			result -= v
+		} else {
+			result += v
+		}
+	}
+	return result
+}
+
+/*
+4. Median of Two Sorted Arrays
+*/
+
+// sorted -> immediately thinking of binary search
+// median = middle value?
+// 3 cases
+// subsumed, end overlaps, not overlapping
+
+func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+	// TODO
+}
+
+/*
+266. Palindrome Permutation
+*/
+
+func canPermutePalindrome(s string) bool {
+	seen := map[rune]bool{}
+	for _, c := range s {
+		_, ok := seen[c]
+		if ok {
+			delete(seen, c)
+		} else {
+			seen[c] = true
+		}
+	}
+	if len(s)%2 == 0 {
+		return len(seen) == 0
+	}
+	return len(seen) == 1
 }

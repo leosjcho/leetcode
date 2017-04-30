@@ -457,3 +457,19 @@ class Solution(object):
             if n2.next is None:
                 return False
             n2 = n2.next
+
+'''
+191. Number of 1 Bits
+'''
+
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        count = 0
+        for i in range(32):
+            if ((1 << i) & n) != 0:
+                count += 1
+        return count

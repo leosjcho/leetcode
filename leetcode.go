@@ -1227,54 +1227,37 @@ func romanToInt(s string) int {
 4. Median of Two Sorted Arrays
 */
 
-// sorted -> immediately thinking of binary search
-// median = middle value?
-// 3 cases
-// subsumed, end overlaps, not overlapping
-/*
-1 2
-3 4
-
-1 2 3 4
-	2 3
-
-1 2 3
-	2 3 4
-*/
-
-// TODO
+// https://discuss.leetcode.com/topic/28602/concise-java-solution-based-on-
+// binary-search
 
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-	if len(nums1) > len(nums2) {
-		return findMedianSortedArrays(nums2, nums1)
-	}
+	m, n := len(nums1), len(nums2)
+	l, r := (m+n+1)/2, (m+n+2)/2
+	return (getKth(nums1, nums2, 0, 0, l) + getKth(nums1, nums2, 0, 0, r)) / 2
 }
 
-func findMedianSingle(n []int) float64 {
-
-}
-
-func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-	if len(nums1) <= 1 && len(nums2) <= 1 {
-		return float64(max(nums1[0], nums2[0])+min(nums1[0], nums2[0])) / 2
+func getKth(nums1, nums2 []int, aStart, bStart, k int) float64 {
+	if aStart > len(nums1)-1 {
+		return float64(nums2[bStart+k-1])
 	}
-	m1, mi1 := median(nums1)
-	m2, mi2 := median(nums2)
-	if m1 == m2 {
-		return m1
-	} else if m1 > m2 {
-		return findMedianSortedArrays(nums1[:mi1+1], nums2[mi1:])
+	if bStart > len(nums2)-1 {
+		return float64(nums1[aStart+k-1])
+	}
+	if k == 1 {
+		return float64(min(nums1[aStart], nums2[bStart]))
+	}
+	aMid, bMid := math.MaxInt32, math.MaxInt32
+	if aStart+k/2-1 < len(nums1) {
+		aMid = nums1[aStart+k/2-1]
+	}
+	if bStart+k/2-1 < len(nums2) {
+		bMid = nums2[bStart+k/2-1]
+	}
+	if aMid < bMid {
+		return getKth(nums1, nums2, aStart+k/2, bStart, k-k/2)
 	} else {
-		return findMedianSortedArrays(nums1[:mi2+1], nums2[mi2:])
+		return getKth(nums1, nums2, aStart, bStart+k/2, k-k/2)
 	}
-}
-
-func median(n []int) (float64, int) {
-	m := (len(n) - 1) / 2
-	if len(n)%2 == 0 {
-		return (float64(n[m]) + float64(n[m+1])) / 2, m
-	}
-	return float64(n[m]), m
 }
 
 /*

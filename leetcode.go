@@ -1242,9 +1242,21 @@ func romanToInt(s string) int {
 	2 3 4
 */
 
+// TODO
+
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-	if len(nums1) <= 2 && len(nums2) <= 2 {
-		return float64(max(nums1[0], nums2[0])+min(nums1[1], nums2[1])) / 2
+	if len(nums1) > len(nums2) {
+		return findMedianSortedArrays(nums2, nums1)
+	}
+}
+
+func findMedianSingle(n []int) float64 {
+
+}
+
+func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+	if len(nums1) <= 1 && len(nums2) <= 1 {
+		return float64(max(nums1[0], nums2[0])+min(nums1[0], nums2[0])) / 2
 	}
 	m1, mi1 := median(nums1)
 	m2, mi2 := median(nums2)

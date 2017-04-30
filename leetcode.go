@@ -1231,9 +1231,38 @@ func romanToInt(s string) int {
 // median = middle value?
 // 3 cases
 // subsumed, end overlaps, not overlapping
+/*
+1 2
+3 4
+
+1 2 3 4
+	2 3
+
+1 2 3
+	2 3 4
+*/
 
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-	// TODO
+	if len(nums1) <= 2 && len(nums2) <= 2 {
+		return float64(max(nums1[0], nums2[0])+min(nums1[1], nums2[1])) / 2
+	}
+	m1, mi1 := median(nums1)
+	m2, mi2 := median(nums2)
+	if m1 == m2 {
+		return m1
+	} else if m1 > m2 {
+		return findMedianSortedArrays(nums1[:mi1+1], nums2[mi1:])
+	} else {
+		return findMedianSortedArrays(nums1[:mi2+1], nums2[mi2:])
+	}
+}
+
+func median(n []int) (float64, int) {
+	m := (len(n) - 1) / 2
+	if len(n)%2 == 0 {
+		return (float64(n[m]) + float64(n[m+1])) / 2, m
+	}
+	return float64(n[m]), m
 }
 
 /*

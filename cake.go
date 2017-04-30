@@ -79,5 +79,45 @@ func getProductsOfAllIntsExceptAtIndex(nums []int) []int {
 }
 
 /*
-12. Rotation Point
+35. In-place Shuffle
 */
+
+func inPlaceShuffle(items []int) {
+	for i := range len(items) {
+		j := getRandom(i, len(items)-1)
+		if i != j {
+			items[i], items[j] = items[j], items[i]
+		}
+	}
+}
+
+/*
+36. Single Riffle Shuffle
+*/
+
+func isSingleRiffleRecursive(half1, half2, shuffledDeck []int) bool {
+	if len(shuffledDeck) == 0 {
+		return true
+	}
+	card := shuffledDeck[0]
+	if len(half1) > 0 && len(half2) > 0 && card == half1[0] && card == half2[0] {
+		return isSingleRiffle(half1[1:], half2, shuffledDeck[1:]) ||
+			isSingleRiffle(half1, half2[1:], shuffledDeck[1:])
+	}
+	if len(half1) > 0 && card == half1[0] {
+		return isSingleRiffle(half1[1:], half2, shuffledDeck[1:])
+	}
+	if len(half2) > 0 && card == half2[0] {
+		return isSingleRiffle(half1, half2[1:], shuffledDeck[1:])
+	}
+	return false
+}
+
+func singleRiffleIterative(half1, half2, shuffledDeck []int) bool {
+	h1, h2 := 0, 0
+	for _, card := range shuffledDeck {
+		if card == half1[h1] {
+			h1++
+		}
+	}
+}

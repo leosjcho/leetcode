@@ -4,8 +4,11 @@ import (
 	"math"
 	"strconv"
 	"strings"
-	"unicode"
 )
+
+func main() {
+
+}
 
 /*
 Data Structures
@@ -273,6 +276,7 @@ func max(x, y int) int {
 // 1 2 3 4
 // 2 * 3 * 4, 1 * 3 * 4, 1 * 2 * 4, 1 * 2 * 3
 
+/*
 func productExceptSelf(nums []int) []int {
 	res := []int{1}
 	for i := 1; i < len(nums); i++ {
@@ -285,6 +289,7 @@ func productExceptSelf(nums []int) []int {
 	}
 	return res
 }
+*/
 
 // explcit
 func productExceptSelf(nums []int) []int {
@@ -382,6 +387,7 @@ whitespace characters?
 /*
 first accepted
 */
+/*
 func myAtoi(str string) int {
 	str = strings.TrimLeftFunc(str, func(arg2 rune) bool {
 		return unicode.IsSpace(arg2)
@@ -457,6 +463,7 @@ func hasPreIntegralRegion(str string) bool {
 	}
 	return false
 }
+*/
 
 /*
 refactored accepted
@@ -489,6 +496,11 @@ func myAtoi(str string) int {
 /*
 206. Reverse Linked List
 */
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
 /**
  * Definition for singly-linked list.
@@ -566,6 +578,12 @@ func swapPairs(head *ListNode) *ListNode {
 /*
 104. Maximum Depth of Binary Tree
 */
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
 
 /**
  * Definition for a binary tree node.
@@ -789,9 +807,9 @@ type MyQueue struct {
 }
 
 /** Initialize your data structure here. */
-func Constructor() MyQueue {
-	return MyQueue{NewIStack(), NewIStack()}
-}
+// func Constructor() MyQueue {
+// 	return MyQueue{NewIStack(), NewIStack()}
+// }
 
 /** Push element x to the back of queue. */
 func (this *MyQueue) Push(x int) {
@@ -951,7 +969,8 @@ func isPerfectSquare(num int) bool {
 1. Two Sum
 */
 
-func twoSum(nums []int, target int) []int {
+// name modified to prevent atom errors
+func twoSumREMOVEME(nums []int, target int) []int {
 	// complement map
 	// keep track of complements seen
 	// linear time and space complexity
@@ -1121,15 +1140,15 @@ type LRUCache struct {
 	capacity int
 }
 
-func Constructor(capacity int) LRUCache {
-	return LRUCache{
-		data:     map[int]int{},
-		lives:    map[int]int{},
-		purgeQ:   []int{},
-		count:    0,
-		capacity: capacity,
-	}
-}
+// func Constructor(capacity int) LRUCache {
+// 	return LRUCache{
+// 		data:     map[int]int{},
+// 		lives:    map[int]int{},
+// 		purgeQ:   []int{},
+// 		count:    0,
+// 		capacity: capacity,
+// 	}
+// }
 
 // updates timestamp
 // never evicts elements
@@ -1290,12 +1309,12 @@ type MinStack struct {
 }
 
 /** initialize your data structure here. */
-func Constructor() MinStack {
-	return MinStack{
-		items: []int{},
-		mins:  []int{},
-	}
-}
+// func Constructor() MinStack {
+// 	return MinStack{
+// 		items: []int{},
+// 		mins:  []int{},
+// 	}
+// }
 
 func (this *MinStack) Push(x int) {
 	m := len(this.mins)
@@ -1445,4 +1464,12 @@ func merge(left *ListNode, right *ListNode) *ListNode {
 		p.Next = right
 	}
 	return l.Next
+}
+
+/*
+66. Plus One
+*/
+
+func plusOne(digits []int) []int {
+	return digits
 }

@@ -1522,25 +1522,11 @@ func maxProfit(prices []int) int {
 */
 
 func rob(nums []int) int {
-	n := len(nums)
-	if n == 0 {
-		return 0
+	prev, curr := 0, 0
+	for _, p := range nums {
+		temp := curr
+		curr = max(prev+p, curr)
+		prev = temp
 	}
-	dp := make([]int, len(nums)+1)
-	dp[0] = nums[0]
-	if n == 1 {
-		return dp[0]
-	}
-	dp[1] = max(nums[1], nums[0])
-	if n == 2 {
-		return dp[1]
-	}
-	dp[2] = max(nums[0]+nums[2], nums[1])
-	if n == 3 {
-		return dp[2]
-	}
-	for i := 3; i < len(nums); i++ {
-		dp[i] = max(dp[i-2]+nums[i], dp[i-1])
-	}
-	return dp[len(nums)-1]
+	return curr
 }

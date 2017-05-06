@@ -1489,19 +1489,16 @@ func plusOne(digits []int) []int {
 */
 
 func climbStairs(n int) int {
-	memo := make([]int, n+1)
-	return climbStairsHelper(n, memo)
-}
-
-func climbStairsHelper(n int, memo []int) int {
-	if n <= 2 {
+	if n < 3 {
 		return n
 	}
-	if memo[n] > 0 {
-		return memo[n]
+	dp := make([]int, n+1)
+	dp[1] = 1
+	dp[2] = 2
+	for i := 3; i <= n; i++ {
+		dp[i] = dp[i-1] + dp[i-2]
 	}
-	memo[n] = climbStairsHelper(n-1, memo) + climbStairsHelper(n-2, memo)
-	return memo[n]
+	return dp[n]
 }
 
 /*

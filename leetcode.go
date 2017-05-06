@@ -680,7 +680,8 @@ func binaryTreePaths(root *TreeNode) []string {
 	if root.Left == nil && root.Right == nil {
 		return []string{strVal}
 	}
-	mergedPaths := append(binaryTreePaths(root.Left), binaryTreePaths(root.Right)...)
+	mergedPaths := append(binaryTreePaths(root.Left),
+		binaryTreePaths(root.Right)...)
 	paths := []string{}
 	for _, path := range mergedPaths {
 		paths = append(paths, strVal+"->"+path)
@@ -928,7 +929,8 @@ func searchRange(nums []int, target int) []int {
 	return []int{left, right}
 }
 
-func search(nums []int, target int, success func(target int, nums []int, mid int) bool,
+func search(nums []int, target int, success func(target int, nums []int,
+	mid int) bool,
 	checkLeft bool) int {
 	lo, hi := 0, len(nums)-1
 	for lo <= hi {
@@ -1513,4 +1515,32 @@ func maxProfit(prices []int) int {
 		minSeen = min(minSeen, p)
 	}
 	return maxProfit
+}
+
+/*
+198. House Robber
+*/
+
+func rob(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	dp := make([]int, len(nums)+1)
+	dp[0] = nums[0]
+	if n == 1 {
+		return dp[0]
+	}
+	dp[1] = max(nums[1], nums[0])
+	if n == 2 {
+		return dp[1]
+	}
+	dp[2] = max(nums[0]+nums[2], nums[1])
+	if n == 3 {
+		return dp[2]
+	}
+	for i := 3; i < len(nums); i++ {
+		dp[i] = max(dp[i-2]+nums[i], dp[i-1])
+	}
+	return dp[len(nums)-1]
 }

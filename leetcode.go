@@ -1697,3 +1697,75 @@ func maxPathSumHelper(root *TreeNode, mp *int) int {
 	*mp = max(*mp, leftMax+rightMax+root.Val)
 	return max(leftMax, rightMax) + root.Val
 }
+
+/*
+23. Merge k Sorted Lists
+*/
+
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+// func mergeKLists(lists []*ListNode) *ListNode {
+// 	// build heap with list heads
+// 	heap := heapify(lists) // O(n log n)
+// 	curr := &ListNode{}
+// 	headPointer := &ListNode{Next: curr} // pointer to head
+// 	// while heap is not empty
+// 	for !heap.IsEmpty() { // O(n)
+// 		// get node and it's index in the list of lists
+// 		node, i := extractMin(heap) // O(log n)
+// 		lists[i] = node.Next
+// 		insert(heap, &HeapNode{lists[i], i}) // O(log n)
+// 		curr.Next = node
+// 		curr = node
+// 	}
+// 	return headPointer.Next.Next
+// }
+
+// overall runtime O(n log n)
+// space complexity O(n)
+
+/*
+215. Kth Largest Element in an Array
+*/
+
+// modification of quicksort in descending order (largest to smallest)
+// given array [5, 2, 3, 1, 4] and k = 2, we want 4
+// pick random element, move larger elements to left,
+// smaller elements to right.
+// our random element will end up in position i
+// if i == k-1, then we're done. that's the value! how lucky.
+// if i < k-1, then recursively perform this modified quicksort on
+// the right side of array
+// if i > k-1, perform on left side of array
+func findKthLargest(nums []int, k int) int {
+	lo, hi := 0, len(nums)-1
+	for lo <= hi {
+		i := partition(nums, lo, hi)
+		if i == k-1 {
+			return nums[i]
+		} else if i < k-1 {
+			lo = i + 1
+		} else { // i is > k-1
+			hi = i - 1
+		}
+	}
+	return -1 // error code
+}
+
+func partition(nums []int, lo, hi int) int {
+	i := lo - 1
+	pivot := nums[hi]
+	for j := lo; j < hi; j++ {
+		if nums[j] >= pivot {
+			i++
+			nums[i], nums[j] = nums[j], nums[i]
+		}
+	}
+	nums[i+1], nums[hi] = nums[hi], nums[i+1]
+	return i + 1
+}

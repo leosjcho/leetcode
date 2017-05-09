@@ -1934,6 +1934,9 @@ func maxSubArray(nums []int) int {
 */
 
 func convert(s string, numRows int) string {
+	if numRows < 2 {
+		return s
+	}
 	rows := generateRows(s, numRows) // [][]byte
 	zigZagged := []byte{}
 	for i := range rows {

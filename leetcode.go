@@ -481,7 +481,8 @@ func myAtoi(str string) int {
 		i++
 	}
 	for i < len(str) && (str[i] >= '0' && str[i] <= '9') {
-		if base > math.MaxInt32/10 || (base == math.MaxInt32/10 && str[i]-'0' > 7) {
+		if base > math.MaxInt32/10 || (base == math.MaxInt32/10 &&
+			str[i]-'0' > 7) {
 			if sign == 1 {
 				return math.MaxInt32
 			}
@@ -1667,4 +1668,32 @@ func sortedArrayToBST(nums []int) *TreeNode {
 	n.Left = sortedArrayToBST(nums[0:mid])
 	n.Right = sortedArrayToBST(nums[mid+1 : len(nums)])
 	return n
+}
+
+/*
+124. Binary Tree Maximum Path Sum
+*/
+
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func maxPathSum(root *TreeNode) int {
+	mp := math.MinInt32
+	maxPathSumHelper(root, &mp)
+	return mp
+}
+
+func maxPathSumHelper(root *TreeNode, mp *int) int {
+	if root == nil {
+		return 0
+	}
+	leftMax := max(0, maxPathSumHelper(root.Left, mp))
+	rightMax := max(0, maxPathSumHelper(root.Right, mp))
+	*mp = max(*mp, leftMax+rightMax+root.Val)
+	return max(leftMax, rightMax) + root.Val
 }

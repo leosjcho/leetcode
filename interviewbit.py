@@ -62,14 +62,7 @@ In other words, arrange the elements into a sequence such that a1
 def wave(self, A):
     A.sort()
     i = 0
-    mid = len(A) / 2
-    j = mid
-    wave = []
-    while i < mid:
-        wave.append(A[j])
-        wave.append(A[i])
-        j += 1
-        i += 1
-    if j == len(A) - 1:
-        wave.append(A[j])
-    return wave
+    while i < len(A)-1:
+        A[i], A[i+1] = A[i+1], A[i]
+        i += 2
+    return A

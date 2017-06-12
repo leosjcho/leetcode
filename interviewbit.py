@@ -1,3 +1,7 @@
+'''
+Arrays
+'''
+
 # @param X : list of integers
 # @param Y : list of integers
 # Points are represented by (X[i], Y[i])
@@ -12,3 +16,33 @@ def coverPoints(self, X, Y):
         steps += min(dx, dy)
         steps += max(dx, dy) - min(dx, dy)
     return steps
+
+'''
+Noble Integer
+
+Given an integer array, find if an integer p exists in the array such
+that the number of integers greater than p in the array equals to p
+If such an integer is found return 1 else return -1.
+
+# @param A : list of integers
+# @return an integer
+
+naive implementation:
+    for each element, compare it against every other element and keep count
+    O(n^2) time
+better implementaiton:
+    sort integers
+    iterate over sorted list
+        if # of elements after element == element value, return true
+    return false
+'''
+
+def solve(self, A):
+    A.sort()
+    for i in xrange(len(A)):
+        # strictly larger elements at higher indices
+        if i < len(A)-1 and A[i] == A[i+1]:
+            continue
+        if len(A) - i - 1 == A[i]:
+            return 1
+    return -1

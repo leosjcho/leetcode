@@ -28,7 +28,8 @@ If such an integer is found return 1 else return -1.
 # @return an integer
 
 naive implementation:
-    for each element, compare it against every other element and keep count
+    for each element, compare it against every other element and keep
+    count
     O(n^2) time
 better implementaiton:
     sort integers
@@ -46,3 +47,29 @@ def solve(self, A):
         if len(A) - i - 1 == A[i]:
             return 1
     return -1
+
+'''
+Wave Array
+
+Given an array of integers, sort the array into a wave like array
+and return it,
+In other words, arrange the elements into a sequence such that a1
+>= a2 <= a3 >= a4 <= a5.....
+'''
+
+# @param A : list of integers
+# @return a list of integers
+def wave(self, A):
+    A.sort()
+    i = 0
+    mid = len(A) / 2
+    j = mid
+    wave = []
+    while i < mid:
+        wave.append(A[j])
+        wave.append(A[i])
+        j += 1
+        i += 1
+    if j == len(A) - 1:
+        wave.append(A[j])
+    return wave

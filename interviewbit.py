@@ -104,3 +104,33 @@ def overlaps(self, x, y):
     if x.start > y.start:
         x, y = y, x
     return x.end > y.start
+
+'''
+Add One To Number
+'''
+
+# @param A : list of integers
+# @return a list of integers
+def plusOne(self, A):
+    overflow = False
+    for i in reversed(xrange(len(A))):
+        if A[i] < 9:
+            A[i] += 1
+            overflow = False
+            break
+        else:
+            A[i] = 0
+            overflow = True
+    if overflow:
+        temp = A
+        A = [1]
+        A.extend(temp)
+    return self.stripLeadingZeroes(A)
+
+def stripLeadingZeroes(self, A):
+    j = 0
+    for i in xrange(len(A)):
+        if A[i] != 0:
+            j = i
+            break
+    return A[j:]

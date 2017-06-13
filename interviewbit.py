@@ -88,7 +88,8 @@ def insert(self, intervals, new_interval):
             ret.append(interval)
             continue
         if self.overlaps(interval, blob):
-            blob = Interval(min(interval.start, blob.start), max(interval.end, blob.end))
+            blob = Interval(min(interval.start, blob.start),
+                max(interval.end, blob.end))
         else:
             if blob.end < interval.start:
                 ret.append(blob)

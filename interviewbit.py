@@ -134,3 +134,30 @@ def stripLeadingZeroes(self, A):
             j = i
             break
     return A[j:]
+
+'''
+Largest Number
+
+Given a list of non negative integers, arrange them such that they
+form the largest number.
+
+For example:
+Given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+'''
+
+# @param A : tuple of integers
+# @return a strings
+def largestNumber(self, A):
+    if len(A) == 0:
+        return "0"
+    temp = sorted(A, cmp=self.numCmp)
+    if temp[0] == 0:
+        return "0"
+    return "".join(str(x) for x in temp)
+
+def numCmp(self, x, y):
+    xstr, ystr = str(x), str(y)
+    if int(xstr + ystr) > int(ystr + xstr):
+        return -1
+    else:
+        return 1

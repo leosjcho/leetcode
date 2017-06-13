@@ -66,3 +66,41 @@ def wave(self, A):
         A[i], A[i+1] = A[i+1], A[i]
         i += 2
     return A
+
+'''
+Merge Intervals
+'''
+
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+# @param intervals, a list of Intervals
+# @param new_interval, a Interval
+# @return a list of Interval
+def insert(self, intervals, new_interval):
+    ret = []
+    blob = new_interval
+    for i, interval in enumerate(intervals):
+        if blob == None:
+            ret.append(interval)
+            continue
+        if self.overlaps(interval, blob):
+            blob = Interval(min(interval.start, blob.start), max(interval.end, blob.end))
+        else:
+            if blob.end < interval.start:
+                ret.append(blob)
+                blob = None
+            ret.append(interval)
+    if blob != None:
+        ret.append(blob)
+    return ret
+
+def overlaps(self, x, y):
+    if x is None or y is None:
+        return False
+    if x.start > y.start:
+        x, y = y, x
+    return x.end > y.start

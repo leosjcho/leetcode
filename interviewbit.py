@@ -162,3 +162,23 @@ def numCmp(self, x, y):
         return -1
     else:
         return 1
+
+'''
+Set Matrix Zeros
+'''
+
+# @param A : list of list of integers
+# @return the same list modified
+def setZeroes(self, A):
+    rowFlag = [False for i in xrange(len(A))]
+    colFlag = [False for i in xrange(len(A[0]))]
+    for i in xrange(len(A)):
+        for j in xrange(len(A[0])):
+            if A[i][j] == 0:
+                rowFlag[i] = True
+                colFlag[j] = True
+    for i in xrange(len(A)):
+        for j in xrange(len(A[0])):
+            if rowFlag[i] == True or colFlag[j] == True:
+                A[i][j] = 0
+    return A

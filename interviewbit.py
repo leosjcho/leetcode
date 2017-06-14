@@ -182,3 +182,31 @@ def setZeroes(self, A):
             if rowFlag[i] == True or colFlag[j] == True:
                 A[i][j] = 0
     return A
+
+'''
+Max Distance
+'''
+
+# @param A : tuple of integers
+# @return an integer
+def maximumGap(self, A):
+    # track index
+    index = {}
+    for i, x in enumerate(A):
+        index[x] = min(index[x], i)
+    # sort
+    sortedA = sorted(list(A))
+    # find max index in suffix of array
+    maxIndex = {}
+    idxMax = float('-inf')
+    for i in reversed(xrange(len(A))):
+        idx = index[sortedA[i]]
+        idxMax = max(idxMax, idx)
+        maxIndex[i] = idxMax
+    # find max diff
+    maxDiff = float('-inf')
+    for i in xrange(len(A)):
+        idx = index[sortedA[i]]
+        jdx = maxIndex[i]
+        maxDiff = max(maxDiff, jdx - idx)
+    return maxDiff

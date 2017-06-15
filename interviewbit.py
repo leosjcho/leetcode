@@ -210,3 +210,18 @@ def maximumGap(self, A):
         jdx = maxIndex[i]
         maxDiff = max(maxDiff, jdx - idx)
     return maxDiff
+
+'''
+First Missing Integer
+'''
+
+# @param A : list of integers
+# @return an integer
+def firstMissingPositive(self, A):
+    memo = {}
+    for i, x in enumerate(A):
+        memo[x] = True
+    for i in xrange(len(A)):
+        if i + 1 not in memo:
+            return i + 1
+    return len(A) + 1

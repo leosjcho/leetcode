@@ -570,9 +570,68 @@ class Solution(object):
         for char in s:
             if char in brackets.values():
                 stack.append(char)
-            elif char in brackets.keys():
+            elif char in brackets.keys():''
                 if len(stack) > 0 and stack[-1] == brackets[char]:
                     stack.pop()
                 else:
                     return False
         return len(stack) == 0
+
+'''
+146. LRU Cache
+'''
+
+from collections import deque
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.capacity = capacity
+        self.queue = deque()
+        self.cache = {}
+        self.lives = {}
+        self.count = 0
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        if key not in self.cache:
+            return -1
+        else:
+            self.lives[key] += 1
+            self.queue.append(key)
+            return self.cache[key]
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: void
+        """
+        if key not in self.cache:
+            self.count += 1
+            if self.count > self.capacity:
+                self.evict()
+            self.lives[key] = 1
+        else:
+            self.lives[key] += 1
+        self.queue.append(key)
+        self.cache[key] = value
+
+    def evict(self):
+        while self.count > self.capacity:
+            key = self.queue.popleft()
+            self.lives[key] -= 1
+            if self.lives[key] == 0:
+                self.count -= 1
+                del self.cache[key]
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)

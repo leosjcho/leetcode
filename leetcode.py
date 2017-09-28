@@ -649,3 +649,16 @@ class Solution(object):
         :rtype: bool
         """
         return (log10(n)/log10(3)).is_integer() if n > 0 else False
+
+'''
+125. Valid Palindrome
+'''
+
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = [c.lower() for c in s if c.isalnum()]
+        return all([s[i] == s[~i] for i in range(len(s) // 2)])

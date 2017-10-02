@@ -928,3 +928,15 @@ class Solution(object):
         intervals[oi] = cur
         oi += 1
         return intervals[:oi]
+
+        '''
+        concise soln
+        '''
+
+        out = []
+        for interval in sorted(intervals, key=lambda x: x.start):
+            if out and interval.start <= out[-1].end:
+                out[-1].end = max(out[-1].end, interval.end)
+            else:
+                out.append(interval)
+        return out

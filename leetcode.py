@@ -840,7 +840,8 @@ class Solution(object):
 '''
 
 import heapq
-import functools
+from functools import reduce
+from operator import mul
 
 class Solution(object):
     def maximumProduct(self, nums):
@@ -875,3 +876,10 @@ class Solution(object):
         neg_2 *= max(max_3)
         # print(pos_3, neg_2)
         return max(pos_3, neg_2)
+
+        '''
+        concise solution
+        '''
+
+        max_3, min_2 = heapq.nlargest(3, nums), heapq.nsmallest(2, nums)
+        return max(reduce(mul, max_3), reduce(mul, min_2 + [max_3[0]]))

@@ -740,3 +740,205 @@ class Solution(object):
         if lh == -1 or rh == -1 or abs(lh-rh) > 1:
             return -1
         return max(lh, rh)
+
+'''
+121. Best Time to Buy and Sell Stock
+'''
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices) <= 1:
+            return 0
+        max_profit = float("-inf")
+        min_seen = prices[0]
+        for i, price in enumerate(prices[1:]):
+            max_profit = max(max_profit, price - min_seen)
+            min_seen = min(min_seen, price)
+        return max(max_profit, 0)
+
+'''
+238. Product of Array Except Self
+'''
+
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        '''
+        input:
+        [2, 3, 5]
+        output:
+        [3 * 5, 2 * 5, 2 * 3]
+        n * n = O(n^2) brute force implementation
+        can we do O(n log n)? will sorting help us? doesn't seem like it
+        2, 2 * 3
+        5, 5 * 3
+        running_product[i] = product of elements in 0 ... i
+        reverse_running_product[i] = ""
+        '''
+        A = [0, nums[0]]
+        for i, x in enumerate(nums[1:]):
+            running_product.append(running_product[i] * x)
+        # now running product is populated
+        reverse_running_product = nums[-1]
+        result = [running_product[-2]]
+        for i, x in enumerate(reversed(nums[:-1])):
+            result.append(reverse_running_product + running_product[-i])
+            reverse_running_product = x * reverse_running_product
+        return reversed(result)
+
+        '''
+        [2, 3, 5]
+        running_product = [2]
+        i = 0
+        x = 3
+        running_product = [2, 2*3]
+        i = 1
+        x = 5
+        running_product = [2, 6, 6*5]
+
+        reverse_running_product = 5
+        result = []
+
+        [2, 3] reversed = [3, 2]
+        i = 0
+        x = 3
+        result = []
+        '''
+
+        result = [1]
+        for i in range(1, len(nums)):
+            result.append(nums[i-1] * result[-1])
+        running_product = nums[-1]
+        for i in reversed(range(len(nums)-1)):
+            result[i] *= running_product
+            running_product *= nums[i]
+        return result
+
+        '''
+        result = [1]
+        result = [1, 2 * 1]
+        result = [1, 2, 3 * 2]
+        result = [1, 2, 6]
+        prod = 5
+        0, 1 = 1, 0
+        result = [1, 2, 6]
+        result[1] *= 5
+        prod = 5 * 3 = 15
+        result = [1, 2*5, 6]
+        result = [1, 2*5, 2*3]
+        result[0] = 1 * 5 * 3 = 15
+        result = [3 * 5, 2 * 5, 2 * 3]
+        '''
+
+'''
+628. Maximum Product of Three Numbers
+'''
+
+import heapq
+from functools import reduce
+from operator import mul
+
+class Solution(object):
+    def maximumProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        '''
+        [1, 2, 3] -> trivial, return all 3 numbers multiplied
+        [7, 6, 2, 4]
+        [0, 6, 2, 4]
+        things to think about ... negative numbers and zeroes
+        brute force is n * n * n O(n^3)
+        max product will be
+        three largest positive numbers
+        two largest negative and largest positive
+            largest negative and two positive leads to negative #
+            three largest negative leads to negative
+        maintain min and max heaps
+        pop off smallest two and largest 3, find max between the two
+        '''
+        max_3, min_2 = nums[:3], list(map(lambda x: -x, nums[:2]))
+        heapq.heapify(max_3)
+        heapq.heapify(min_2)
+        heapq.heappushpop(min_2, -nums[2])
+        for i, x in enumerate(nums[3:]):
+            heapq.heappushpop(max_3, x)
+            heapq.heappushpop(min_2, -x)
+        # print(max_3, min_2)
+        pos_3 = functools.reduce(lambda t, x: t * x, max_3)
+        neg_2 = -min_2[0] * -min_2[1]
+        neg_2 *= max(max_3)
+        # print(pos_3, neg_2)
+        return max(pos_3, neg_2)
+
+        '''
+        concise solution
+        '''
+
+        max_3, min_2 = heapq.nlargest(3, nums), heapq.nsmallest(2, nums)
+        return max(reduce(mul, max_3), reduce(mul, min_2 + [max_3[0]]))
+
+'''
+56. Merge Intervals
+'''
+
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution(object):
+    def merge(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: List[Interval]
+        """
+        def overlap(t1, t2):
+            '''
+            :type t1: Interval, t2: Interval
+            :rtype: Interval
+            '''
+            if t2.start < t1.start:
+                t1, t2 = t2, t1
+            if t2.start > t1.end:
+                return None
+            else:
+                return Interval(t1.start, max(t1.end, t2.end))
+
+        if len(intervals) < 2:
+            return intervals
+        intervals.sort(key=lambda x: (x.start, x.end))
+        oi = 0
+        cur = intervals[0]
+        for interval in intervals[1:]:
+            new_interval = overlap(cur, interval)
+            if new_interval:
+                cur = new_interval
+            else:
+                intervals[oi] = cur
+                oi += 1
+                cur = interval
+        intervals[oi] = cur
+        oi += 1
+        return intervals[:oi]
+
+        '''
+        concise soln
+        '''
+
+        out = []
+        for interval in sorted(intervals, key=lambda x: x.start):
+            if out and interval.start <= out[-1].end:
+                out[-1].end = max(out[-1].end, interval.end)
+            else:
+                out.append(interval)
+        return out

@@ -934,7 +934,8 @@ class Solution(object):
         '''
 
         out = []
-        for interval in sorted(intervals, key=lambda x: x.start):
+        intervals.sort(key=lambda x: x.start)
+        for interval in intervals:
             if out and interval.start <= out[-1].end:
                 out[-1].end = max(out[-1].end, interval.end)
             else:

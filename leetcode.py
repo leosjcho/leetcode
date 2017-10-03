@@ -338,7 +338,8 @@ class Solution(object):
                 while nums[next_index] != 0:
                     index_inc = nums[next_index]
                     nums[next_index] = 0
-                    next_index = self.nextIndex(len(nums), next_index, index_inc)
+                    next_index = self.nextIndex(len(nums), next_index,
+                        index_inc)
                     indexes_in_loop += 1
                 if indexes_in_loop > 1 and forward != backward:
                     return True
@@ -401,7 +402,8 @@ class Solution(object):
         if root.val in memo:
             return memo[root.val]
 
-        count = self.lcaCount(root.left, p, q, memo) + self.lcaCount(root.right, p, q, memo)
+        count = self.lcaCount(root.left, p, q, memo) + self.lcaCount(
+            root.right, p, q, memo)
         if root.val == p.val or root.val == q.val:
             count += 1
         memo[root.val] = count

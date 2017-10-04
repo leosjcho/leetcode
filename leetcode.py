@@ -445,20 +445,18 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
-        if head is None or head.next is None:
+        if not head:
             return False
-        n1 = head
-        n2 = head.next
-        while True:
+        n1, n2 = head, head.next
+        while n1 and n2:
             if n1.val == n2.val:
                 return True
-            if n1.next is None or n2.next is None:
-                return False
             n1 = n1.next
-            n2 = n2.next
-            if n2.next is None:
+            if n2.next:
+                n2 = n2.next.next
+            else:
                 return False
-            n2 = n2.next
+        return False
 
 '''
 191. Number of 1 Bits

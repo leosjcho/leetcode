@@ -39,3 +39,44 @@ class TempTracker:
             return
         if self.freqs[x] > self.freqs[self.mode]:
             self.mode = x
+
+'''
+8. Balanced Binary Tree
+'''
+
+class BinaryTreeNode:
+
+    def __init__(self, value):
+        self.value = value
+        self.left  = None
+        self.right = None
+
+    def insert_left(self, value):
+        self.left = BinaryTreeNode(value)
+        return self.left
+
+    def insert_right(self, value):
+        self.right = BinaryTreeNode(value)
+        return self.right
+
+class Solution:
+
+    def __init__(self):
+        self.min = float('inf')
+        self.max = float('-inf')
+
+    def is_superbalanced(root):
+        if not root:
+            return True
+        q = [(root, 0)]
+        while q:
+            n, d = q.pop()
+            if not n:
+                self.min = min(self.min, d)
+                self.max = max(self.max, d)
+                if abs(self.max - self.min) > 1:
+                    return False
+            else:
+                q.append((root.left, d+1))
+                q.append((root.right, d+1))
+        return True

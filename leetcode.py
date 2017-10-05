@@ -1128,9 +1128,7 @@ class MinStack(object):
         :rtype: void
         """
         self.items.append(x)
-        if not self.minstack:
-            self.minstack.append(x)
-        elif x <= self.minstack[-1]:
+        if not self.minstack.peek() or x <= self.minstack.peek():
             self.minstack.append(x)
 
     def pop(self):

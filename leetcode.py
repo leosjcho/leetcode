@@ -1380,5 +1380,4 @@ class Solution(object):
         rev = 0
         while x > rev:
             rev, x = rev * 10 + x % 10, x // 10
-            print("x: {} rev: {}".format(x, rev))
         return x == rev or x == rev // 10

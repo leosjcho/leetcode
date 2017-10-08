@@ -1331,3 +1331,15 @@ class Solution(object):
         if root:
             return traversal(root.left, root.right)
         return True
+
+        '''
+        EPI solution
+        '''
+
+        def check_symmetric(t1, t2):
+            if not t1 and not t2:
+                return True
+            elif t1 and t2:
+                return t1.val == t2.val and check_symmetric(t1.left, t2.right) and check_symmetric(t1.right, t2.left)
+            return False
+        return not root or check_symmetric(root.left, root.right)

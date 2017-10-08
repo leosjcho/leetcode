@@ -1365,3 +1365,20 @@ class Solution(object):
         node.val = node.next.val
         node.next = node.next.next
 
+'''
+9. Palindrome Number
+'''
+
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x < 0 or (x != 0 and x % 10 == 0):
+            return False
+        rev = 0
+        while x > rev:
+            rev, x = rev * 10 + x % 10, x // 10
+            print("x: {} rev: {}".format(x, rev))
+        return x == rev or x == rev // 10

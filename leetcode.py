@@ -1340,6 +1340,28 @@ class Solution(object):
             if not t1 and not t2:
                 return True
             elif t1 and t2:
-                return t1.val == t2.val and check_symmetric(t1.left, t2.right) and check_symmetric(t1.right, t2.left)
+                return t1.val == t2.val and \
+                    check_symmetric(t1.left, t2.right) and \
+                    check_symmetric(t1.right, t2.left)
             return False
         return not root or check_symmetric(root.left, root.right)
+
+'''
+237. Delete Node in a Linked List
+'''
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        node.val = node.next.val
+        node.next = node.next.next
+

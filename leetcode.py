@@ -1419,3 +1419,24 @@ class Solution(object):
             return Status(num_nodes, tree if num_nodes == 2 else None)
 
         return lca_helper(root, p, q).ancestor
+
+'''
+50. Pow(x, n)
+'''
+
+class Solution(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        result, power = 1.0, n
+        if power < 0:
+            power, x = -power, 1.0 / x
+        while power:
+            if power & 1:
+                result *= x
+            x *= x
+            power >>= 1
+        return result

@@ -1758,3 +1758,46 @@ class Solution(object):
                 if nums[i] < nums[i+1]:
                     swap(nums, i, i+1)
                 shouldBeLessThan = True
+
+'''
+461. Hamming Distance
+'''
+
+class Solution(object):
+    def hammingDistance(self, x, y):
+        """
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+        xor = x ^ y
+        diffBits = 0
+        while xor:
+            xor = xor & (xor - 1)
+            diffBits += 1
+        return diffBits
+
+'''
+371. Sum of Two Integers
+'''
+
+class Solution(object):
+    def getSum(self, a, b):
+        """
+        :type a: int
+        :type b: int
+        :rtype: int
+        """
+        # 32 bits integer max
+        MAX = 0x7FFFFFFF
+        # 32 bits interger min
+        MIN = 0x80000000
+        # mask to get last 32 bits
+        mask = 0xFFFFFFFF
+        carryover = b
+        while carryover != 0:
+            digits = (a ^ b)
+            carryover = (a & b) << 1
+            a = digits & mask
+            b = carryover & mask
+        return a if a <= MAX else ~(a ^ mask)

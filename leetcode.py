@@ -1675,3 +1675,46 @@ class Solution(object):
                 word_start_index = i + 1
 
         return "".join(s)
+
+'''
+2. Add Two Numbers
+'''
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+
+'''
+280. Wiggle Sort
+'''
+
+class Solution(object):
+    def wiggleSort(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+
+        def swap(A, i, j):
+            A[i], A[j] = A[j], A[i]
+
+        shouldBeLessThan = True
+        for i in range(len(nums)-1):
+            if shouldBeLessThan:
+                if nums[i] > nums[i+1]:
+                    swap(nums, i, i+1)
+                shouldBeLessThan = False
+            else:
+                if nums[i] < nums[i+1]:
+                    swap(nums, i, i+1)
+                shouldBeLessThan = True

@@ -1872,3 +1872,24 @@ class Solution(object):
             t.insert(s)
         output = t.lcp(t.root.childNode(), len(strs))
         return "".join(output) if output else ""
+
+'''
+simplified vertical scanning solution
+'''
+
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if not strs:
+            return ""
+        if len(strs) == 1:
+            return strs[0]
+        base = strs[0]
+        for i, c in enumerate(base):
+                for s in strs:
+                    if i == len(s) or s[i] != c:
+                        return base[:i]
+        return base

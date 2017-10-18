@@ -1953,7 +1953,8 @@ class Solution(object):
         def maxDepthHelper(root, depth):
             if not root:
                 return depth
-            return max(maxDepthHelper(root.left, depth+1), maxDepthHelper(root.right, depth+1))
+            return max(maxDepthHelper(root.left, depth+1),
+                       maxDepthHelper(root.right, depth+1))
         return maxDepthHelper(root, 0)
 
 '''

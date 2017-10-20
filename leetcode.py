@@ -2035,3 +2035,57 @@ class Solution(object):
         root.left = self.sortedArrayToBST(nums[:mid])
         root.right = self.sortedArrayToBST(nums[mid+1:])
         return root
+
+'''
+366. Find Leaves of Binary Tree
+'''
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def findLeaves(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return None
+        output = []
+        q = collections.deque()
+        q.append((root, 0))
+        while q:
+            n, d = q.popleft()
+            if not n:
+                continue
+            if d >= len(output):
+                output.append([])
+            output[d].append(n.val)
+            q.append((n.left, d+1))
+            q.append((n.right, d+1))
+        return output.reverse()
+
+'''
+53. Maximum Subarray
+'''
+
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return None
+        maxSum, curSum = float('-inf'), 0
+        for x in nums:
+            curSum += x
+            maxSum = max(maxSum, curSum)
+            if curSum < 0:
+                curSum = 0
+        return maxSum
+            

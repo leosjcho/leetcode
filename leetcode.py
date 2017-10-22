@@ -2154,5 +2154,26 @@ class Solution(object):
         for i, x in enumerate(nums[2:], 2):
             # skip current and take previous
             # if taking current, you're
-            dp[i] = max(dp[i-1], dp[i-2]+x, dp[i-3]+x if i >= 3 else float('-inf'))
+            dp[i] = max(dp[i-1],
+                        dp[i-2]+x,
+                        dp[i-3]+x if i >= 3 else float('-inf'))
         return dp[len(nums)-1]
+
+'''
+300. Longest Increasing Subsequence
+'''
+
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        lengths = [0 for _ in nums]
+        for i, x in enumerate(nums):
+            lengths[i] = max(
+                [lengths[j] if nums[j] < x else 0 for j in range(i)] + [0]
+            ) + 1
+        return max(lengths)

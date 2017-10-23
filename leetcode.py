@@ -2103,7 +2103,8 @@ class Solution(object):
         def score(i, j):
             return 0 if word1[i-1] == word2[j-1] else 1
         n, m = len(word1)+1, len(word2)+1
-        dp = [[i]+[j if i == 0 else 0 for j in range(1, m)] for i in range(n)]
+        dp = [ [i] + [j if i == 0 else 0 for j in range(1, m)] \
+            for i in range(n)]
         for i in range(1, n):
             for j in range(1, m):
                 dp[i][j] = min(
@@ -2177,3 +2178,25 @@ class Solution(object):
                 [lengths[j] if nums[j] < x else 0 for j in range(i)] + [0]
             ) + 1
         return max(lengths)
+
+'''
+338. Counting Bits
+'''
+
+class Solution(object):
+    def countBits(self, num):
+        """
+        :type num: int
+        :rtype: List[int]
+        """
+        cache = {}
+        def countBitsHelper(num):
+            if num == 0:
+                return 0
+            if num in cache:
+                return cache[num]
+            cache[num] = countBitsHelper((num & (num - 1))) + 1
+            return cache[num]
+
+        return [countBitsHelper(i) for i in range(num+1)]
+

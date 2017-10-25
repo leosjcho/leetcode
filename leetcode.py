@@ -2251,3 +2251,51 @@ class Solution(object):
             curMin = min(temp * x, curMin * x, x)
             maxSeen = max(maxSeen, curMax)
         return maxSeen
+
+'''
+47. Permutations II
+'''
+
+class Solution(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        if len(nums) == 1:
+            return [nums]
+        output = []
+        seen = {}
+        for i in range(len(nums)):
+            if nums[i] not in seen:
+                seen[nums[i]] = True
+                nums[0], nums[i] = nums[i], nums[0]
+                for p in self.permuteUnique(nums[1:]):
+                    output.append([nums[0]] + p)
+                nums[0], nums[i] = nums[i], nums[0]
+        return output
+
+'''
+226. Invert Binary Tree
+'''
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+
+        if not root:
+            return
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        return root

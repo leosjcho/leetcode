@@ -1,9 +1,13 @@
-package lru
+package golang
 
 import (
 	"container/list"
 	"log"
 )
+
+/*
+146. LRU Cache
+*/
 
 type LRUCache struct {
 	data        map[int]*info
@@ -26,8 +30,8 @@ func Constructor(capacity int) LRUCache {
 
 // updates timestamp
 // never evicts elements
-func (this *LRUCache) Get(key int) int {
-	i, ok := this.data[key]
+func (l *LRUCache) Get(key int) int {
+	i, ok := l.data[key]
 	if !ok || i == nil || i.v == -1 {
 		return -1
 	}
@@ -38,26 +42,26 @@ func (this *LRUCache) Get(key int) int {
 // update timestamp
 // insert key
 // evict if at capacity
-func (this *LRUCache) Put(key int, value int) {
+func (l *LRUCache) Put(key int, value int) {
 	i, ok := this.data[key]
 	// is this a new item?
 	if !ok || i == nil || i.v == -1 {
-		e := this.accessOrder.PushBack(key)
+		e := l.accessOrder.PushBack(key)
 		i = &info{v: value, e: e}
-		this.data[key] = i
+		l.data[key] = i
 	} else {
-		this.accessOrder.MoveToBack(i.e)
+		l.accessOrder.MoveToBack(i.e)
 		i.v = value
 	}
 
-	if this.accessOrder.Len() > this.capacity {
-		e := this.accessOrder.Front()
+	if l.accessOrder.Len() > l.capacity {
+		e := l.accessOrder.Front()
 		key, ok := e.Value.(int)
 		if !ok {
 			log.Fatal("invalid list element")
 		}
-		this.data[key] = nil
-		this.accessOrder.Remove(e)
+		l.data[key] = nil
+		l.accessOrder.Remove(e)
 	}
 }
 

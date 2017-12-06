@@ -86,13 +86,13 @@ func nextStart(curIndex int, matchingRanges [][]int, codeStr string) int {
 
 func monoliths() []monolith {
 	p := monolith{
-		filename:     "leetcode.py",
+		filename:     "python/leetcode.py",
 		regexPattern: pythonQuestionHeaderPattern,
 		destDir:      "python/",
 		fileExt:      ".py",
 	}
 	g := monolith{
-		filename:     "leetcode.go",
+		filename:     "golang/leetcode.go",
 		regexPattern: golangQuestionHeaderPattern,
 		destDir:      "golang/",
 		fileExt:      ".go",

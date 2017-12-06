@@ -1,4 +1,3 @@
-package main
 
 import (
 	"container/heap"
@@ -6,10 +5,6 @@ import (
 	"strconv"
 	"strings"
 )
-
-func main() {
-
-}
 
 /*
 Data Structures

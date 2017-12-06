@@ -8,4 +8,4 @@ To run the partitioner:
 
 `$ go run partitioner.go`
 
-Partitioned questions will be populated in the python and golang directories. URLs to the relevant leetcode questions are inserted as well.
+The `/python` and `/golang` directories are populated with the partitioned questions.
